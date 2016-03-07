@@ -7,7 +7,7 @@ ADD config /docker_configurator
 ADD https://raw.githubusercontent.com/EnigmaCurry/docker-configurator/master/docker_configurator.py /docker_configurator/docker_configurator.py
 ADD scripts/start.sh /
 
-EXPOSE 8080/tcp
+EXPOSE 3142/tcp
 VOLUME ["/var/spool/squid3"]
 
 ENTRYPOINT ["/start.sh"]

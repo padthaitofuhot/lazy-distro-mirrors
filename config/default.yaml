@@ -9,14 +9,39 @@
 template_map:
  squid.conf.mako: /etc/squid3/squid.conf
 
+# Port on which to listen for client connects
+port: 3142
+
+# Limit access to clients on these networks:
+networks:
+ weave-net-subnet: 10.255.255.0/24
+ weave-dns-subnet: 10.255.254.0/24
+
+# Use upstream proxy
+proxy: http://192.168.1.60:3128
+
+# Max size of an individual object
+maximum_object_size: 2 GB
+
 # Max size of cache in MB
-cache_size: 20000
+cache_size: 11 GB
+
+# Where to store the cache data
+cache_dir: /var/spool/squid3
+
+# The oldest and slowest is ufs, which is synchronous.
+# The next level up is aufs, which is asynchronous.
+# If you want to use diskd or coss, read up on them first.
+cache_access_scheme: aufs
 
 # List of mirrors - local name -> URL
 # Squid uses name-based resolution to choose the mirror. You will need to setup
 # your local DNS (or edit /etc/hosts) for the names of the mirrors below and
-# point them to the IP address of your docker server 
+# point them to the IP address and port of your squid container.
+# If using WeaveDNS, be sure to append .weave.local to the mirror names
+# AND ALSO tell WeaveDNS about these mappings a la:
+# weave dns-add <my lazy distro mirror container name> -h pingme2.weave.local
 mirrors:
- kernel-mirror: http://mirrors.kernel.org
- xmission-mirror: http://mirrors.xmission.com
- advancedhosters-mirror: http://mirrors.advancedhosters.com
+ kernel-mirror.weave.local: http://mirrors.kernel.org
+ xmission-mirror.weave.local: http://mirrors.xmission.com
+ advancedhosters-mirror.weave.local: http://mirrors.advancedhosters.com
