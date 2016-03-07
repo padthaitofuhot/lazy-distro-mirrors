@@ -1,10 +1,10 @@
 FROM sameersbn/squid
-MAINTAINER ryan@enigmacurry.com
+MAINTAINER padthaitofuhot
 
 RUN apt-get update && apt-get install -y python3 python3-yaml python3-mako
 
 ADD config /docker_configurator
-ADD https://raw.githubusercontent.com/EnigmaCurry/docker-configurator/master/docker_configurator.py /docker_configurator/docker_configurator.py
+# add hardcopy to repo rather than pulling down, since we may be behind one (or seven) proxies.
 ADD scripts/start.sh /
 
 EXPOSE 3142/tcp
